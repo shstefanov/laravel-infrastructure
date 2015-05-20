@@ -1,0 +1,14 @@
+{
+  "name": "shstefanov/laravel-infrastructure",
+  "type": "git",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stefan Stefanov",
+      "email": "s.h.stefanov@mail.bg"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {}
+}
+
