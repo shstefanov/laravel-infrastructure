@@ -32,7 +32,7 @@ function new_xhr() {
 function AjaxApi(options){
   this.endpoint       = options.endpoint       || "";
   this.defaultHeaders = options.defaultHeaders || {};
-  this.timeout        = options.timeout;
+  this.timeout        = options.timeout        || 0;
 }
 
 AjaxApi.prototype.fork = function(options){
@@ -66,8 +66,9 @@ AjaxApi.prototype.ajax = function(options, cb){
     url += "?" + payload;
     payload = null;
   }
+  
 
-  xhr.open(method, url, true);
+  xhr.open(method, url);
 
   for (var headerKey in allHeaders) {
     if (allHeaders.hasOwnProperty(headerKey)) {
@@ -88,8 +89,15 @@ AjaxApi.prototype.ajax = function(options, cb){
       clearTimeout(tid);
     }
     if (xhr.readyState === 4) {
+      var response;
+      try{
+        response = JSON.parse(xhr.responseText);
+      }
+      catch(err){
+        response = xhr.responseText;
+      }
       var err = (!xhr.status||(xhr.status < 200 || xhr.status >= 300) && xhr.status !== 304);
-      cb(err, xhr.responseText, xhr);
+      cb(err, response, xhr);
     }
   };
 
