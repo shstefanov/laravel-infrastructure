@@ -1,6 +1,6 @@
 var _ = require("underscore");
 
-module.exports = {
+var helpers = module.exports = {
   
   chain: function(fns, context){
     var self = this;

@@ -40,11 +40,7 @@ var BaseRouter = Backbone.Router.extend({
     this.routes = routes;
     var config  = require("config");
     var router  = this;
-    var rootPath;
-    if(config.router && config.router.rootPath){
-      rootPath = config.router.rootPath.replace(/^\//, "");
-    }
-    else rootPath = "";
+    var rootPath = this.rootPath = config.infrastructure.name;
     document.body.addEventListener("click", function(e){
       var href = getHref(getLink(e.target), rootPath);
       if(href) {
@@ -63,15 +59,19 @@ var BaseRouter = Backbone.Router.extend({
   },
 
   bindRoutes: function(){
+    console.log("r", this.routes)
+    var rootPath = this.rootPath;
     for(var routePath in this.routes){
       var routeName = this.routes[routePath];
       if(Array.isArray(routeName)){
         for(var i=0;i<routeName.length;i++){
-          this.route(routePath.replace(/^\//,""), routeName[i]);
+          console.log(rootPath+"/"+routePath.replace(/^\//,""));
+          this.route(rootPath+"/"+routePath.replace(/^\//,""), routeName[i]);
         }
       }
       else{
-        this.route(routePath.replace(/^\//,""), routeName);
+        console.log(rootPath+"/"+routePath.replace(/^\//,""));
+        this.route(rootPath+"/"+routePath.replace(/^\//,""), routeName);
       }
     }
   }

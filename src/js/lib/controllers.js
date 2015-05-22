@@ -21,6 +21,9 @@ controllers_api.ajax({
     window.controllers = controllers;
     controllers[key] = new Controller(key, response[key], controllers_api);
   }
+
+  controllers.__ready = true;
+  if(controllers.onReady) controllers.onReady(); 
 });
 
 
