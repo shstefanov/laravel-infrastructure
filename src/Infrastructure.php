@@ -12,13 +12,9 @@ $infrastructure_app_name = "";
 
 class Infrastructure extends Facade 
 {
-  
 
   protected static function getFacadeAccessor() { return 'Infrastructure'; }
 
-  // private static $cache = [];
-  // public static function set($key, $val){ $this->cache[$key] = $val; }
-  // public static function get($key)      { return $this->cache[$key]; }
 
   public static function assets() {
     $name = self::$app_name;
@@ -33,7 +29,7 @@ class Infrastructure extends Facade
 
     if(isset($options["controllers"])){
       
-      Route::get($route."/_index", function() use ($options, $route){
+      Route::get($route."/_index", function() use ($options){
         $result = [];
         $base_methods = array_merge(["__construct"], get_class_methods('App\Http\Controllers\Controller'));
         foreach($options["controllers"] as $controllerName){
@@ -42,7 +38,7 @@ class Infrastructure extends Facade
         return $result;
       });
 
-      Route::get($route."/_api", function(Request $request, Response $response) use ($options){
+      Route::post($route."/_api", function(Request $request, Response $response) use ($options){
         $data = $request->all();
         $app = app();
         $controller = $app->make('App\Http\Controllers\\'.$data["controller"]);

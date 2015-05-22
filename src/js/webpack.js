@@ -48,10 +48,11 @@ var packer = function(name, app_path){
   var app_config;
   if(!fs.existsSync(app_config_path)) app_config = {};
   else                                app_config = require(app_config_path);
-  build(name, {
+
+  build(name, _.extend({
     entry:        create_entry(name, app_path),
     app_config:   load_config(name, app_path)
-  });
+  }, app_config));
 }
 
 function load_config(name, app_path){
@@ -61,6 +62,8 @@ function load_config(name, app_path){
     helpers.deepExtend(app_config, app_config.development);
     delete app_config.development;
   }
+
+
   app_config.infrastructure = { name: name };
   helpers.deepExtend(global_config, app_config);
   return JSON.stringify(app_config);
