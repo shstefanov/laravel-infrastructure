@@ -41,8 +41,9 @@ class Infrastructure extends Facade
       Route::post($route."/_api", function(Request $request, Response $response) use ($options){
         $data = $request->all();
         $app = app();
+        $body = json_decode($data["body"], true);
         $controller = $app->make('App\Http\Controllers\\'.$data["controller"]);
-        return $controller->callAction($data["action"], [$data["body"]]);
+        return $controller->callAction($data["action"], $body);
       });
 
     }

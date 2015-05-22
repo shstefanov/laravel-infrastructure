@@ -76,6 +76,7 @@ AjaxApi.prototype.ajax = function(options, cb){
     }
   }
 
+
   var tid;
   if(this.timeout){
     tid = setTimeout(function(){

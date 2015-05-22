@@ -18,10 +18,8 @@ controllers_api.ajax({
 }, function(err, response, xhr){
   if(err) throw response;
   for(var key in response){
-    console.log(response);
     window.controllers = controllers;
     controllers[key] = new Controller(key, response[key], controllers_api);
-
   }
 });
 
@@ -35,13 +33,11 @@ function Controller(name, methods, api){
       api.ajax({
         method: "POST",
         url:    "/_api",
-        headers:{
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
+        headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
           controller: name,
           action:     action,
-          body:       args
+          body:       JSON.stringify(args)
         }
       }, cb);
     }
